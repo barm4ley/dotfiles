@@ -1,0 +1,38 @@
+[defaults]
+status = -ramdu
+log = -f
+
+[ui]
+username = Max Musich <maxim@unity3d.com>
+merge = araxishgmerge
+
+[extensions]
+share =
+largefiles =
+eol =
+rebase =
+transplant =
+progress =
+purge =
+strip =
+#dynapath = ~/.hgext/dynapath/dynapath.py
+prompt = ~/.hgext/hg-prompt/prompt.py
+rdiff = ~/.hgext/rdiff/rdiff.py
+hgext.convert=
+fetch =
+hgext.extdiff =
+color =
+mq =
+shelve =
+
+[diff]
+git = True
+
+[extdiff]
+cmd.arxdiff = /Applications/Araxis/Utilities/compare
+opts.arxdiff = -2 -wait
+
+[color]
+mode = auto
+
+

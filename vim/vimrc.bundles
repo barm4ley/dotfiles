@@ -1,0 +1,54 @@
+if &compatible
+    set nocompatible
+end
+
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+" Let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
+
+" Define bundles via Github repos
+Plugin 'ctrlpvim/ctrlp.vim'               " fuzzy searcher
+Plugin 'mileszs/ack.vim'                  " ack searcher
+Plugin 'rking/ag.vim'                     " silversearcher
+Plugin 'flazz/vim-colorschemes'           " colorschemes pack
+Plugin 'editorconfig/editorconfig-vim'    " plugin for editorconfig settings file
+Plugin 'bling/vim-airline'                " fancy menu
+Plugin 'ludovicchabant/vim-lawrencium'    " mercurial addon
+Plugin 'godlygeek/tabular'                " tabularize anything
+Plugin 'Lokaltog/vim-easymotion'          " text navigation
+Plugin 'octol/vim-cpp-enhanced-highlight' " CPP highlighter
+Plugin 'majutsushi/tagbar'                " display tags in a window
+Plugin 'ervandew/supertab'                " completion helper
+Plugin 'davidhalter/jedi-vim'             " python completion
+Plugin 'tpope/vim-surround'               " all about surrounding
+Plugin 'tpope/vim-dispatch'               " async build and test dispatcher
+Plugin 'tpope/vim-fugitive'               " git addon
+Plugin 'tpope/vim-sensible'               " universal set of defaults
+Plugin 'scrooloose/syntastic'             " syntax checker
+Plugin 'scrooloose/nerdtree'              " directory tree
+Plugin 'scrooloose/nerdcommenter'         " commenter
+Plugin 'jlanzarotta/bufexplorer'          " Buffer manager
+Plugin 'benmills/vimux'                   " Tmux communication
+Plugin 'rodjek/vim-puppet'                " Makes vim puppet frendly
+Plugin 'lilydjwg/colorizer'               " colorize all text in the form #rrggbb or #rgb
+Plugin 'bronson/vim-trailing-whitespace'  " Highlights trailing whitespace in red and provides :FixWhitespace to fix it
+
+"Plugin 'Yggdroot/indentLine'
+Plugin 'nathanaelkane/vim-indent-guides'
+
+Plugin 'cespare/vim-toml'
+
+Plugin 'klen/python-mode'               " Python mode (docs, refactor, lints, highlightting, run and ipdb and more)
+
+Plugin 'saltstack/salt-vim'             " Salt files highlighter
+Plugin 'mitsuhiko/vim-jinja'            " Jinja files highlighter
+
+if filereadable(expand("~/.vimrc.bundles.local"))
+    source ~/.vimrc.bundles.local
+endif
+
+call vundle#end()
+filetype on

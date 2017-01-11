@@ -1,0 +1,221 @@
+let mapleader = ","
+
+" Disable arrow keys
+noremap <Up> ddkP " Move line up
+noremap <Down> ddp " Move line down
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
+
+vnoremap <Up> <NOP>
+vnoremap <Down> <NOP>
+vnoremap <Left> <NOP>
+vnoremap <Right> <NOP>
+
+set nocompatible
+
+" Toggle paste mode
+set pastetoggle=<F2>
+
+
+" nnoremap <leader>hf :set clipboard=unnamedplus<CR>
+" nnoremap <leader>fh :set clipboard-=unnamedplus<CR>
+set clipboard-=unnamedplus
+
+" Session options
+set ssop-=options    " do not store global and local values in a session
+set ssop-=folds      " do not store folds
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+    syntax on
+endif
+
+if filereadable(expand("~/.vimrc.bundles"))
+    source ~/.vimrc.bundles
+endif
+
+filetype plugin indent on
+
+set history=10000          " remember more commands and search history
+set hidden                 " Allow buffer switching without saving them (allow unsaved background buffers and remember marks/undo for them)
+
+" Indentation settings
+set expandtab              " Use spaces when TAB is pressed
+set tabstop=4              " Width of the TAB character
+set shiftwidth=4           " Number of spaces to use when autoindenting
+set softtabstop=4          " Number of spaces that a <Tab> counts for while performing editing operations
+set autoindent             " Use automatic indentation
+
+set cursorline             " Enable hilighting of cursor line
+
+set laststatus=2           " Show status line
+
+set autoread               " If a file is changed outside of vim, automatically reload it without asking
+
+" Invisible chars settings
+set list                                                  " Show invisible chars
+set listchars=trail:·,precedes:«,extends:»,eol:¬,tab:▸\   " Symbols for invisible chars
+highlight NonText ctermfg=DarkGray guifg=DarkGray
+highlight SpecialKey ctermfg=DarkGray guifg=DarkGray
+highlight ColorColumn ctermbg=DarkGray guibg=DarkGray
+
+" Search settings:
+set incsearch              " Incremental search
+set hlsearch               " Hilight search
+
+
+set noerrorbells visualbell t_vb=          " Disable beeping
+autocmd GUIEnter * set visualbell t_vb=    " Disable beeping in GUI mode
+
+" Make it obvious where 80 characters is
+" set textwidth=110
+" set colorcolumn=+1
+
+" Numbers
+set number
+set numberwidth=4
+
+" Yank text to the OS X clipboard
+noremap <leader>y "*y
+noremap <leader>yy "*Y
+
+" Preserve indentation while pasting text from the OS X clipboard
+noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
+
+" GUI
+set background=dark        " Color scheme
+set guioptions-=r          " Remove right-hand scroll bar
+set guioptions-=m          " Remove menu bar
+set guioptions-=T          " Remove toolbar
+"set guifont=Anonymice\ Powerline\ Plus\ Nerd\ File\ Types:h14 " Set font with pictures
+set guifont=Inconsolata:h14
+
+" PLUGIN: Ack.vim
+if executable('ag')
+      let g:ackprg = 'ag --vimgrep'
+endif
+
+" PLUGIN: Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" PLUGIN: CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" Use the nearest .git directory as the cwd (or use current dir file is
+" located in)
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
+
+" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+    " Use Ag over Grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+else
+
+let g:ctrlp_user_command = {
+	\ 'types': {
+		\ 1: ['.git', 'cd %s && git ls-files'],
+		\ 2: ['.hg', 'hg --cwd %s locate -I .'],
+		\ },
+	\ 'fallback': 'find %s -type f'
+	\ }
+endif
+
+"--------------------------------------------------------------
+
+" PLUGIN: Airline
+"let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
+"let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
+let g:airline_theme='badwolf'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+
+" PLUGIN: NERDTree
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeHijackNetrw=1
+hi Directory guifg=#FF0000 ctermfg=red
+
+" PLUGIN: Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Disable autocommenting
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Local config
+if filereadable($HOME . "/.vimrc.local")
+    source ~/.vimrc.local
+endif
+
+
+" PLUGIN: Bufexplorer
+nmap <F5> <Esc>:BufExplorer<cr>
+vmap <F5> <esc>:BufExplorer<cr>
+imap <F5> <esc>:BufExplorer<cr>
+
+" F6 - previous buffer
+nmap <F6> :bp<cr>
+vmap <F6> <esc>:bp<cr>i
+imap <F6> <esc>:bp<cr>i
+
+" F7 - next buffer
+nmap <F7> :bn<cr>
+vmap <F7> <esc>:bn<cr>i
+imap <F7> <esc>:bn<cr>i
+
+
+" PLUGIN: indentLine
+let g:indentLine_char = '︙'
+
+" PLUGIN: Python-mode
+let g:pymode_rope = 0
+let g:pymode_rope_completion = 0
+let g:pymode_rope_complete_on_dot = 0
+
+let g:pymode_virtualenv = 1
+let g:pymode_doc = 0
+let g:pymode_doc_key = 'K'
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
+let g:pymode_lint_ignore="E501,W601,C0110"
+let g:pymode_lint_write = 1
+" highlight
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+" switch source autofold off
+let g:pymode_folding = 0
+
