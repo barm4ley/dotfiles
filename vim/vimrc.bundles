@@ -45,6 +45,7 @@ Plugin 'klen/python-mode'               " Python mode (docs, refactor, lints, hi
 
 Plugin 'saltstack/salt-vim'             " Salt files highlighter
 Plugin 'mitsuhiko/vim-jinja'            " Jinja files highlighter
+Plugin 'sheerun/vim-polyglot'           " mulitlang highlighter
 
 if filereadable(expand("~/.vimrc.bundles.local"))
     source ~/.vimrc.bundles.local
